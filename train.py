@@ -25,6 +25,10 @@ def loadData(filelist):
     for fname in filelist:
         raw_text = open(fname).read()
         raw_text=re.sub('[^'+''.join(permitted_chars)+']', ' ', raw_text)
+        raw_text=re.sub("\s\s+", " ", raw_text)
+
+        print(raw_text[:10000])
+
         full_text =full_text + raw_text.lower()
         print('File %s: %d'%(fname,len(raw_text)))
     print('Chars in dataset:',len(full_text))

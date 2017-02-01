@@ -12,7 +12,7 @@ import re
 import sys
 from train import permitted_chars, loadData,getModel,int_to_char,char_to_int
 
-def main():
+def main(weights_file):
     raw_text=loadData(["mity.txt",'nesbit-poszukiwacze-skarbu.txt'])
 
     # summarize the loaded data
@@ -45,9 +45,9 @@ def main():
 
     #Load model from file
     model = getModel()
-
-    filename = "weights-improvement-39-1.5718.hdf5"
-    model.load_weights(filename)
+    model.summary()
+    print('Loading',weights_file)
+    model.load_weights(weights_file)
     model.compile(loss='categorical_crossentropy', optimizer='adam')
     model.summary()
 
@@ -69,4 +69,7 @@ def main():
     	pattern = pattern[1:len(pattern)]
     print ("\nDone.")
 if __name__ == '__main__':
-    main()
+    if len(sys.argv)!=2:
+        print('\nOne argument required: weights-improvement-file')
+    else:
+        main(sys.argv[1])
